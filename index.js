@@ -84,7 +84,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
     }
     const person = new Person({
       name: body.name,
-      number: body.number || 0,
+      number: body.number,
     })
     
     person.save().then(savedPerson => {
