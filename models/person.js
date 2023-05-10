@@ -17,7 +17,11 @@ mongoose.connect('mongodb+srv://milky:felDB@milkyway.sgse8eg.mongodb.net/Phonebo
 //toJSON muuttaa sen merkkijonoksi 
 
 const noteSchema = new mongoose.Schema({
-    name: String,
+  //mongoosen sisäänrakennettuja validointisääntöjä
+    name:{ type:String,
+            minlength:3,
+            required:true
+    },
     number: String,
   })
 noteSchema.set('toJSON', {
