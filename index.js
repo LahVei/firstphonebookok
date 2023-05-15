@@ -21,7 +21,7 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger)
  
-app.get('/api/persons', (request, response,next) => {
+app.get('/api/persons', (request, response, next) => {
   Person.find({})
     .then(items => {
       response.json(items)
