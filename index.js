@@ -5,8 +5,8 @@ const Person = require('./models/person')
 const app = express()
 //app.use(cors)
 app.use(express.static('build'))
-// Expressenin middleware muuttaa post pyynnöissä mukana olevan JSON-muotoisen 
-// datan JavaScript-olioksi ja sijoittaa sen request olion kenttään body
+//Expressenin middleware muuttaa post pyynnöissä mukana olevan JSON-muotoisen 
+//datan JavaScript-olioksi ja sijoittaa sen request olion kenttään body
 app.use(express.json())
 console.log('nyt backendissä')
 
