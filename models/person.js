@@ -7,7 +7,7 @@ console.log('connecting to', process.env.PORT)
 // mongodb+srv://milky:felDB@milkyway.sgse8eg.mongodb.net/Phonebook?retryWrites=true&w=majority
 mongoose.connect('mongodb+srv://milky:felDB@milkyway.sgse8eg.mongodb.net/Phonebook?retryWrites=true&w=majority')
 .then(result => {
-  console.log('connected to MongoDB')
+  console.log('connected to MongoDB, yep 3.22')
 })
 .catch((error) => {
   console.log('error connecting to MongoDB:', error.message)
