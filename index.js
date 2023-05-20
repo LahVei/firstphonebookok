@@ -9,7 +9,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(cors)
 require('dotenv').config()
-console.log('nyt backendissä ollaan')
+console.log('nyt backendissä ollaan 3.22')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
@@ -58,7 +58,7 @@ app.get('/api/info', (request, response, next) => {
  
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    // eslint-disable-next-line no-unused-vars
+    //eslint-disable-next-line no-unused-vars
     .then(() => {
       response.status(204).end()
     })
