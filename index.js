@@ -20,7 +20,7 @@ const requestLogger = (request, response, next) => {
   next()
 }
 app.use(requestLogger)
-app.get('/api/persons', (request, response, next) => {
+app.get('/api/persons', (request, response) => {
   console.log('tulee renderiin --> user app yritys haku db')
   Person.find({})
     .then(items => {
@@ -29,7 +29,7 @@ app.get('/api/persons', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get('/api/persons/:id', (request, response, next) => {
+app.get('/api/persons/:id', (request, response) => {
   Person.findById(request.params.id)
     .then(person => {
       if (person) {
@@ -42,7 +42,7 @@ app.get('/api/persons/:id', (request, response, next) => {
       next(error)
     })
 })
-app.get('/api/info', (request, response, next) => {
+app.get('/api/info', (request, response) => {
   Person.find({})
     .then(items => {
       const pituus = items.length
@@ -56,7 +56,7 @@ app.get('/api/info', (request, response, next) => {
     })
 })
  
-app.delete('/api/persons/:id', (request, response, next) => {
+app.delete('/api/persons/:id', (request, response) => {
   Person.findByIdAndRemove(request.params.id)
     //eslint-disable-next-line no-unused-vars
     .then(() => {
@@ -66,7 +66,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
       next(error)
     })
 })
-app.post('/api/persons', (request, response, next) => {
+app.post('/api/persons', (request, response) => {
   console.log('data lisäys tietokantaan')
   const body = request.body
   if (!body.name) {
@@ -91,7 +91,7 @@ app.post('/api/persons', (request, response, next) => {
       next(error)
     })
 })
-app.put('/api/persons/:id', (request, response, next) => {
+app.put('/api/persons/:id', (request, response) => {
   const { name, number } = request.body
 
   Person.findByIdAndUpdate(
