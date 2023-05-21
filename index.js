@@ -20,16 +20,17 @@ const requestLogger = (request, response, next) => {
   next()
 }
 app.use(requestLogger)
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   console.log('tulee renderiin --> user app yritys haku db')
   Person.find({})
     .then(items => {
       response.json(items)
+      mongoose.connection.close()
     }) 
     .catch(error => next(error))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then(person => {
       if (person) {
@@ -37,18 +38,20 @@ app.get('/api/persons/:id', (request, response) => {
       } else {
         response.status(404).end()
       }
+      mongoose.connection.close()
     })
     .catch(error => {
       next(error)
     })
 })
-app.get('/api/info', (request, response) => {
+app.get('/api/info', (request, response, next) => {
   Person.find({})
     .then(items => {
       const pituus = items.length
       const d = new Date()
       let time = d.toLocaleString()
       response.send(`<p>Phonebook has info for ${pituus} people</><p>${time}`)
+      mongoose.connection.close()
     }) 
     .catch(error => {
       console.log(error)
@@ -56,17 +59,18 @@ app.get('/api/info', (request, response) => {
     })
 })
  
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     //eslint-disable-next-line no-unused-vars
     .then(() => {
       response.status(204).end()
+      mongoose.connection.close()
     })
     .catch(error => {
       next(error)
     })
 })
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   console.log('data lisäys tietokantaan')
   const body = request.body
   if (!body.name) {
@@ -86,12 +90,13 @@ app.post('/api/persons', (request, response) => {
     
   person.save().then(savedPerson => {
     response.json(savedPerson )
+    mongoose.connection.close()
   })
     .catch(error=>{
       next(error)
     })
 })
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
 
   Person.findByIdAndUpdate(
@@ -101,11 +106,12 @@ app.put('/api/persons/:id', (request, response) => {
   ) 
     .then(updatedPerson => {
       response.json(updatedPerson)
+      mongoose.connection.close()
     })
     .catch(error => next(error))
 })
  
-const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (request, response, next) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
