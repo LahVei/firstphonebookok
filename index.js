@@ -1,25 +1,27 @@
 /* eslint-disable linebreak-style */
 //npm run lint -- --fix jos paljon virheitä
 const express = require('express')
+const app = express()
 const cors = require('cors')
 const Person = require('./models/person')
-const app = express()
- 
-app.use(express.static('build'))
-app.use(express.json())
-app.use(cors)
 require('dotenv').config()
-console.log('nyt backendissä ollaan 3.22')
+console.log('nyt backend 22.5.2023')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
   console.log('Path:  ', request.path)
   console.log('Body:  ', request.body)
- 
   console.log('---')
   next()
 }
+const unknownEndpoint = (request, response, next) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(cors())
+app.use(express.json())
 app.use(requestLogger)
+app.use(express.static('build'))
 app.get('/api/persons', (request, response, next) => {
   console.log('tulee renderiin --> user app yritys haku db')
   Person.find({})
@@ -111,20 +113,10 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
  
-const unknownEndpoint = (request, response, next) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
+
 app.use(unknownEndpoint)
 
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  }else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message })
-  }
-  next(error)
-}
+
 
 app.use(errorHandler)
 
