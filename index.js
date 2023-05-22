@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const Person = require('./models/person')
 require('dotenv').config()
-console.log('nyt backend 22.5.2023')
+console.log('nyt backend 22.5.2023_2')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
@@ -18,7 +18,7 @@ const unknownEndpoint = (request, response, next) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 const errorHandler = (error, request, response, next) => {
-   
+  console.error('nyt errorhandler')
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
@@ -123,7 +123,6 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
  
-
 app.use(unknownEndpoint)
 app.use(errorHandler)
 
