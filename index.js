@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const Person = require('./models/person')
 require('dotenv').config()
-console.log('nyt backend 22.5.2023_5')
+console.log('nyt backend 22.5.2023_6')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
