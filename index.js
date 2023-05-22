@@ -17,11 +17,18 @@ const requestLogger = (request, response, next) => {
 const unknownEndpoint = (request, response, next) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+  next(error)
+}
 app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 app.use(express.static('build'))
+
 app.get('/api/persons', (request, response, next) => {
   console.log('tulee renderiin --> user app yritys haku db')
   Person.find({})
@@ -113,9 +120,9 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
  
-app.use(errorHandler)
-app.use(unknownEndpoint)
 
+app.use(unknownEndpoint)
+app.use(errorHandler)
 
 const PORT = process.env.PORT||3001
 app.listen(PORT, () => {
