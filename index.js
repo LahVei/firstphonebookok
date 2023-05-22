@@ -1,11 +1,11 @@
-/*  eslint-disable linebreak-style */
-//  npm run lint -- --fix jos paljon virheitä
+/* eslint-disable linebreak-style */
+// npm run lint -- --fix jos paljon virheitä
 const express = require('express')
 const app = express()
 const cors = require('cors')
 const Person = require('./models/person')
 require('dotenv').config()
-console.log('nyt backend 22.5.2023_2')
+console.log('nyt backend 22.5.2023_3')
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
