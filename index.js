@@ -33,7 +33,7 @@ app.use(requestLogger)
 
 
 app.get('/api/persons', (request, response, next) => {
-  console.log('tulee renderiin --> user app yritys haku db')
+  console.log('tulee renderiin --> user app haku db')
   Person.find({})
     .then(items => {
       response.json(items)
