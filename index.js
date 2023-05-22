@@ -37,7 +37,7 @@ app.get('/api/persons', (request, response, next) => {
   Person.find({})
     .then(items => {
       response.json(items)
-      mongoose.connection.close()
+       
     }) 
     .catch(error => next(error))
 })
@@ -50,7 +50,7 @@ app.get('/api/persons/:id', (request, response, next) => {
       } else {
         response.status(404).end()
       }
-      mongoose.connection.close()
+       
     })
     .catch(error => {
       next(error)
@@ -63,7 +63,7 @@ app.get('/api/info', (request, response, next) => {
       const d = new Date()
       let time = d.toLocaleString()
       response.send(`<p>Phonebook has info for ${pituus} people</><p>${time}`)
-      mongoose.connection.close()
+      
     }) 
     .catch(error => {
       console.log(error)
@@ -76,7 +76,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
     //eslint-disable-next-line no-unused-vars
     .then(() => {
       response.status(204).end()
-      mongoose.connection.close()
+      
     })
     .catch(error => {
       next(error)
@@ -102,7 +102,7 @@ app.post('/api/persons', (request, response, next) => {
     
   person.save().then(savedPerson => {
     response.json(savedPerson )
-    mongoose.connection.close()
+     
   })
     .catch(error=>{
       next(error)
@@ -118,7 +118,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   ) 
     .then(updatedPerson => {
       response.json(updatedPerson)
-      mongoose.connection.close()
+      
     })
     .catch(error => next(error))
 })
